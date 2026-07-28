@@ -51,7 +51,10 @@ class DeltaExchangeClient:
             return datetime.fromtimestamp(float(value), tz=timezone.utc)
         if isinstance(value, str):
             # Supports ISO strings ending in Z.
-            return datetime.fromisoformat(value.replace("Z", "+00:00"))
+            try:
+                return datetime.fromisoformat(value.replace("Z", "+00:00"))
+            except ValueError as exc:
+                raise ExchangeClientError(f"Unsupported datetime value: {value}") from exc
         raise ExchangeClientError(f"Unsupported datetime value: {value}")
 
     @retry(
@@ -91,6 +94,7 @@ class DeltaExchangeClient:
             success = payload.get("success")
             if success is False:
                 last_error = payload.get("error") or payload.get("message")
+                raise ExchangeClientError(f"Unable to fetch open positions. Last error: {last_error}")
             else:
                 result = payload.get("result") or []
                 return result

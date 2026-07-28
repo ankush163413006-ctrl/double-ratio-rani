@@ -71,6 +71,29 @@ python -m src.main
 
 Heartbeat logs run on the same interval as `POLL_INTERVAL_SECONDS`.
 
+## Testing
+
+After installing dependencies, you can run the test suite with:
+
+```bash
+python -m pytest tests -q
+```
+
+To generate a coverage report for the source code, run:
+
+```bash
+python -m pytest tests --cov=src --cov-report=term-missing
+```
+
+You can also run only specific test groups using markers:
+
+```bash
+python -m pytest -m unit -q
+python -m pytest -m api -q
+python -m pytest -m integration -q
+python -m pytest -m async -q
+```
+
 ## Notes
 
 - The code uses `delta-rest-client` and wraps sync calls with `asyncio.to_thread`.
