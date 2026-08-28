@@ -74,6 +74,7 @@ def test_start_and_status_endpoints(api_module) -> None:
     assert status_resp.json()["running"] is True
     assert status_resp.json()["strategy_state"]["profit_exit_threshold_usd"] == 10.0
     assert status_resp.json()["strategy_state"]["loss_exit_threshold_usd"] == -20.0
+    assert status_resp.json()["strategy_state"]["allowed_ratio_spreads"] == [2.0]
 
 
 def test_summary_endpoint_returns_strategy_snapshot(api_module) -> None:
@@ -89,3 +90,4 @@ def test_summary_endpoint_returns_strategy_snapshot(api_module) -> None:
     assert "positions" in resp.json()
     assert resp.json()["profit_exit_threshold_usd"] == 10.0
     assert resp.json()["loss_exit_threshold_usd"] == -20.0
+    assert resp.json()["allowed_ratio_spreads"] == [2.0]
