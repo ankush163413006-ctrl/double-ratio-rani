@@ -75,14 +75,12 @@ Heartbeat logs run on the same interval as `POLL_INTERVAL_SECONDS`.
 
 After installing dependencies, you can run the test suite with:
 
-```bash
-python -m pytest tests -q
-```
+python -m pytest
 
 To generate a coverage report for the source code, run:
 
 ```bash
-python -m pytest tests --cov=src --cov-report=term-missing
+python -m pytest --cov=src --cov-report=term-missing
 ```
 
 You can also run only specific test groups using markers:

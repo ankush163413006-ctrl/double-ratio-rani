@@ -144,6 +144,8 @@ class BotManager:
         return {
             "index_price": index_price,
             "unrealized_pnl": total_pnl,
+            "profit_exit_threshold_usd": self.strategy.settings.profit_exit_threshold_usd,
+            "loss_exit_threshold_usd": self.strategy.settings.loss_exit_threshold_usd,
             "position_count": len(positions),
             "positions": positions,
             "strategy_state": self.status()["strategy_state"],
@@ -186,6 +188,8 @@ class BotManager:
                 "status": self.strategy.state.status,
                 "trigger_price": self.strategy.state.trigger_price,
                 "trigger_pnl": self.strategy.state.trigger_pnl,
+                "profit_exit_threshold_usd": self.strategy.settings.profit_exit_threshold_usd,
+                "loss_exit_threshold_usd": self.strategy.settings.loss_exit_threshold_usd,
                 "call_ratio": call_ratio_state,
                 "put_ratio": put_ratio_state,
             },
