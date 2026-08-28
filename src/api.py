@@ -232,6 +232,9 @@ manager = BotManager(strategy)
 @app.on_event("startup")
 async def startup_event() -> None:
     setup_logging("INFO")
+    root_logger = logging.getLogger()
+    if log_handler not in root_logger.handlers:
+        root_logger.addHandler(log_handler)
     logging.getLogger(__name__).info("Delta BTC Options API starting")
 
 

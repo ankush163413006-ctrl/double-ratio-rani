@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import importlib
+import logging
 import sys
 from datetime import datetime, timezone
 from unittest.mock import AsyncMock, MagicMock
@@ -91,3 +92,18 @@ def test_summary_endpoint_returns_strategy_snapshot(api_module) -> None:
     assert resp.json()["profit_exit_threshold_usd"] == 10.0
     assert resp.json()["loss_exit_threshold_usd"] == -20.0
     assert resp.json()["allowed_ratio_spreads"] == [2.0]
+
+
+def test_logs_endpoint_returns_logs_after_startup(api_module) -> None:
+    logger = logging.getLogger("api.logs.test")
+
+    with TestClient(api_module.app) as client:
+        logger.info("log endpoint test message")
+        response = client.get("/logs")
+
+    assert response.status_code == 200
+    assert response.json()["count"] >= 1
+    assert any(
+        item["message"] == "log endpoint test message"
+        for item in response.json()["logs"]
+    )
